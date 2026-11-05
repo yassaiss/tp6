@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function calculerSomme() {
+            let n1 = document.getElementById("n1").value;
+            let n2 = document.getElementById("n2").value;
+            if (!isNaN(n1) && !isNaN(n2)) {
+                let somme = parseFloat(n1) + parseFloat(n2);
+                document.getElementById("res").value = somme;
+            }else{
+                alert("Veuillez entrer des nombres valides.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>somme de 2 nombres</h1>
+    <form action="#" onsubmit="calculerSomme()">
+        <label for="n1">donner le premier nombre</label>
+        <input type="text" id="n1"><br>
+        <label for="n2">donner le deuxieme nombre</label>
+        <input type="text" id="n2"><br>
+        <button type="submit">Calculer la somme</button>
+        <input type="number" id="res" readonly>
+    </form>
+    
+</body>
+</html>
