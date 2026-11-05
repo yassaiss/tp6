@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function calculerSomme() {
+            let n1 = document.getElementById("n1").value;
+            let n2 = document.getElementById("n2").value;
+            if (!isNaN(n1) && !isNaN(n2)) {
+                let somme = parseFloat(n1) + parseFloat(n2);
+                document.getElementById("res").innerHTML = "la somme est: " + somme;
+            } else if(isNaN(n1) || isNaN(n2)) {
+                document.getElementById("res").innerHTML = "la concaténation est: " + n1 + n2;
+            } else if (n1 == null || n2 == null) {
+                document.getElementById("res").innerHTML = "vous avez annulé l'opération";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>somme de 2 nombres</h1>
+    <form action="#" onsubmit="calculerSomme()">
+        <label for="n1">donner le premier nombre</label>
+        <input type="text" id="n1"><br>
+        <label for="n2">donner le deuxieme nombre</label>
+        <input type="text" id="n2"><br>
+        <button type="submit">Calculer la somme</button>
+    </form>
+    <p id="res"></p>
+</body>
+</html>
