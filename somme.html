@@ -10,9 +10,17 @@
             let n2 = document.getElementById("n2").value;
             if (!isNaN(n1) && !isNaN(n2)) {
                 let somme = parseFloat(n1) + parseFloat(n2);
+<<<<<<< HEAD
                 document.getElementById("res").value = somme;
             }else{
                 alert("Veuillez entrer des nombres valides.");
+=======
+                document.getElementById("res").innerHTML = "la somme est: " + somme;
+            } else if(isNaN(n1) || isNaN(n2)) {
+                document.getElementById("res").innerHTML = "la concaténation est: " + n1 + n2;
+            } else if (n1 == null || n2 == null) {
+                document.getElementById("res").innerHTML = "vous avez annulé l'opération";
+>>>>>>> aee8dadc1a333967382e61812fa06346d511b69d
             }
         }
     </script>
@@ -25,8 +33,13 @@
         <label for="n2">donner le deuxieme nombre</label>
         <input type="text" id="n2"><br>
         <button type="submit">Calculer la somme</button>
+<<<<<<< HEAD
         <input type="number" id="res" readonly>
     </form>
     
+=======
+    </form>
+    <p id="res"></p>
+>>>>>>> aee8dadc1a333967382e61812fa06346d511b69d
 </body>
 </html>
