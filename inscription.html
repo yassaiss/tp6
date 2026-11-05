@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Calcul du Tarif d'Inscription</title>
+</head>
+<body>
+
+    <h1>Calculateur de Tarif d'Inscription au Séminaire</h1>
+
+    <form id="formTarif">
+        <div>
+            <label for="nom">Nom complet :</label>
+            <input type="text" id="nom" required>
+        </div>
+        <br>
+
+        <fieldset>
+            <legend>Statut du participant :</legend>
+            <input type="radio" id="statutEtudiant" name="statut" value="etudiant" checked>
+            <label for="statutEtudiant">Étudiant (20 DT)</label><br>
+
+            <input type="radio" id="statutEnseignant" name="statut" value="enseignant">
+            <label for="statutEnseignant">Enseignant (50 DT)</label><br>
+
+            <input type="radio" id="statutPro" name="statut" value="professionnel">
+            <label for="statutPro">Professionnel (120 DT)</label>
+        </fieldset>
+        <br>
+
+        <div>
+            <label for="atelier">Choix de l'atelier :</label>
+            <select id="atelier">
+                <option value="web">Développement Web (+30 DT)</option>
+                <option value="ia">Intelligence Artificielle (+50 DT)</option>
+                <option value="securite">Cybersécurité (+60 DT)</option>
+            </select>
+        </div>
+        <br>
+
+        <div>
+            <input type="checkbox" id="vip">
+            <label for="vip">Option Kit Goodies VIP (+25 DT)</label>
+        </div>
+        <br>
+
+        <button type="button" onclick="calculerTarif()">Calculer le montant</button>
+        <button type="reset">Réinitialiser</button>
+        <br><br>
+
+        <div>
+            <label for="montantTotal">Montant total à payer :</label><br>
+            <input type="text" id="montantTotal" readonly size="45" placeholder="Le total s'affichera ici">
+        </div>
+    </form>
+
+</body>
+</html>

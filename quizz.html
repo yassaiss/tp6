@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz JavaScript - Entrées/Sorties, Types & Conversions</title>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .option-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem 1rem;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <header class="bg-white shadow-sm py-3 mb-4">
+        <div class="container d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <img src="images/logo-isetch.webp" alt="Logo ISET Charguia" style="height: 60px;" class="me-3">
+                <div>
+                    <h1 class="h4 mb-0 text-primary fw-bold">ISET Charguia</h1>
+                    <p class="text-muted mb-0 small">Département Technologies de l'Informatique</p>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <main class="container pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                
+                <div class="card shadow-sm mb-4 border-0">
+                    <div class="card-body p-4">
+                        <h2 class="h3 text-dark mb-2">Quiz de découverte : Fondamentaux JavaScript</h2>
+                        <p class="text-muted mb-0">Testez vos connaissances sur les entrées/sorties, la déclaration des variables, les types de données, les conversions et l'utilisation de `isNaN`. Répondez à toutes les questions puis cliquez sur le bouton de validation en bas de page.</p>
+                    </div>
+                </div>
+
+                <form id="quizForm">
+                    <div id="questionsContainer">
+                        <!-- Les questions seront injectées dynamiquement ici -->
+                    </div>
+
+                    <div class="text-center mt-4 mb-5">
+                        <button type="button" class="btn btn-primary btn-lg px-5 shadow" onclick="corrigerQuiz()">Valider mes réponses</button>
+                    </div>
+                </form>
+
+                <div id="resultatGlobal" class="d-none"></div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Script JavaScript du Quiz -->
+    <script>
+        const questions = [
+            {
+                id: 1,
+                theme: "Entrées / Sorties",
+                question: "Quelle fonction native permet d'afficher une boîte de dialogue interactive avec un champ de saisie texte ?",
+                options: [
+                    "A) alert()",
+                    "B) prompt()",
+                    "C) confirm()",
+                    "D) console.log()"
+                ],
+                correct: "B",
+                explication: "La fonction <code>prompt()</code> affiche une fenêtre modale invitant l'utilisateur à saisir du texte. <code>alert()</code> affiche un message simple, <code>confirm()</code> demande une validation (OK/Annuler), et <code>console.log()</code> écrit dans la console de débogage."
+            },
+            {
+                id: 2,
+                theme: "Entrées / Sorties",
+                question: "Que retourne par défaut la fonction <code>prompt('Entrez un nombre :')</code> si l'utilisateur saisit <code>42</code> et clique sur OK ?",
+                options: [
+                    "A) Un nombre entier (number : 42)",
+                    "B) Un nombre décimal (float)",
+                    "C) Une chaîne de caractères (string : \"42\")",
+                    "D) Un booléen (true)"
+                ],
+                correct: "C",
+                explication: "<code>prompt()</code> renvoie <strong>toujours</strong> une chaîne de caractères (<code>string</code>), même si l'utilisateur tape uniquement des chiffres. Une conversion explicite (ex: <code>Number()</code> ou <code>parseInt()</code>) est donc nécessaire pour faire des calculs mathématiques."
+            },
+            {
+                id: 3,
+                theme: "Entrées / Sorties",
+                question: "Quel est le rôle de la fonction <code>confirm()</code> en JavaScript ?",
+                options: [
+                    "A) Afficher un message d'information simple",
+                    "B) Demander une saisie textuelle libre",
+                    "C) Afficher une boîte avec les boutons OK et Annuler, retournant un booléen",
+                    "D) Enregistrer des données dans le stockage local"
+                ],
+                correct: "C",
+                explication: "<code>confirm()</code> affiche une boîte de dialogue de confirmation avec les boutons OK et Annuler. Elle retourne <code>true</code> si l'utilisateur clique sur OK et <code>false</code> s'il clique sur Annuler."
+            },
+            {
+                id: 4,
+                theme: "Variables (let / var / const)",
+                question: "Quelle est la principale différence entre <code>let</code> et <code>var</code> en JavaScript ?",
+                options: [
+                    "A) <code>let</code> crée une variable globale inchangeable",
+                    "B) <code>let</code> possède une portée de bloc ({}), contrairement à <code>var</code> qui a une portée de fonction",
+                    "C) <code>var</code> est strictement réservé aux nombres",
+                    "D) Il n'y a aucune différence"
+                ],
+                correct: "B",
+                explication: "<code>let</code> respecte la portée de bloc (limitée aux accolades <code>{}</code> où elle est déclarée), ce qui évite les fuites de variables, tandis que <code>var</code> possède une portée de fonction (ou globale)."
+            },
+            {
+                id: 5,
+                theme: "Variables (let / var / const)",
+                question: "Que se passe-t-il si l'on essaie de réassigner une nouvelle valeur à une variable déclarée avec <code>const</code> ?",
+                options: [
+                    "A) La nouvelle valeur est acceptée sans problème",
+                    "B) La valeur devient automatiquement un nombre",
+                    "C) JavaScript déclenche une erreur d'exécution (TypeError)",
+                    "D) La variable est supprimée de la mémoire"
+                ],
+                correct: "C",
+                explication: "Une variable déclarée avec <code>const</code> est une constante. Sa référence ne peut pas être réassignée après son initialisation initiale, sous peine de déclencher une erreur (TypeError)."
+            },
+            {
+                id: 6,
+                theme: "Types de données (typeof)",
+                question: "Quel est le résultat de l'évaluation de <code>typeof \"ISET Charguia\"</code> ?",
+                options: [
+                    "A) \"text\"",
+                    "B) \"string\"",
+                    "C) \"object\"",
+                    "D) \"char\""
+                ],
+                correct: "B",
+                explication: "En JavaScript, les chaînes de caractères (qu'elles soient entre guillemets simples ou doubles) renvoient le type primitif <code>\"string\"</code> via l'opérateur <code>typeof</code>."
+            },
+            {
+                id: 7,
+                theme: "Conversions de type",
+                question: "Quelle est la différence principale entre <code>Number(\"12.5px\")</code> et <code>parseFloat(\"12.5px\")</code> ?",
+                options: [
+                    "A) Aucune, les deux retournent 12.5",
+                    "B) <code>Number()</code> retourne 12.5 et <code>parseFloat()</code> retourne 12",
+                    "C) <code>Number()</code> retourne <code>NaN</code> car la chaîne contient des caractères non numériques, alors que <code>parseFloat()</code> extrait 12.5",
+                    "D) <code>parseFloat()</code> génère une erreur bloquante"
+                ],
+                correct: "C",
+                explication: "<code>Number()</code> exige une conversion stricte de toute la chaîne (retourne <code>NaN</code> si des caractères non numériques traînent). <code>parseFloat()</code> analyse la chaîne de gauche à droite et extrait le nombre valide jusqu'à rencontrer un caractère invalide (donc 12.5)."
+            },
+            {
+                id: 8,
+                theme: "Conversions de type",
+                question: "Que retourne l'expression <code>parseInt(\"10.99\")</code> ?",
+                options: [
+                    "A) 10.99",
+                    "B) 11",
+                    "C) 10",
+                    "D) \"10\""
+                ],
+                correct: "C",
+                explication: "<code>parseInt()</code> convertit une chaîne en nombre entier en tronquant toute la partie décimale (il ne s'agit pas d'un arrondi, la partie après le point est simplement ignorée)."
+            },
+            {
+                id: 9,
+                theme: "La fonction isNaN()",
+                question: "Que retourne l'évaluation de <code>isNaN(\"Bonjour\")</code> ?",
+                options: [
+                    "A) false",
+                    "B) true",
+                    "C) NaN",
+                    "D) Une erreur"
+                ],
+                correct: "B",
+                explication: "<code>isNaN()</code> tente de convertir son argument en nombre. Puisque la chaîne \"Bonjour\" ne peut pas être convertie en nombre, la conversion échoue et donne <code>NaN</code> (Not a Number), donc la fonction retourne <code>true</code> (c'est bien un 'non-nombre')."
+            },
+            {
+                id: 10,
+                theme: "La fonction isNaN()",
+                question: "Quel est le comportement de la fonction globale <code>isNaN(\"123\")</code> (avec une chaîne contenant des chiffres) ?",
+                options: [
+                    "A) Elle retourne <code>true</code> car c'est une chaîne de caractères",
+                    "B) Elle retourne <code>false</code> car \"123\" peut être convertie avec succès en nombre (123)",
+                    "C) Elle génère une exception",
+                    "D) Elle retourne la valeur 123"
+                ],
+                correct: "B",
+                explication: "La fonction <code>isNaN()</code> réalise une conversion implicite. Comme \"123\" se convertit valablement en nombre numérique, la valeur n'est pas considérée comme NaN, d'où le retour <code>false</code>."
+            }
+        ];
+
+
+        function initialiserQuiz() {
+            const container = document.getElementById("questionsContainer");
+            let html = "";
+
+            questions.forEach((q, index) => {
+                html += `
+                    <div class="card shadow-sm mb-3 border-0 question-card" data-id="${q.id}">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-primary">Question ${index + 1} / ${questions.length}</span>
+                                <small class="text-muted fw-semibold">${q.theme}</small>
+                            </div>
+                            <h5 class="card-title text-dark mb-3">${q.question}</h5>
+                            
+                            <!-- Disposition horizontale des options -->
+                            <div class="option-grid mb-3">
+                `;
+
+                q.options.forEach(opt => {
+                    const lettre = opt.charAt(0); // 'A', 'B', 'C' ou 'D'
+                    const inputId = `q${q.id}_${lettre}`;
+                    html += `
+                        <div class="form-check p-2 border rounded bg-white option-box">
+                            <input class="form-check-input ms-0 me-2" type="radio" name="q${q.id}" id="${inputId}" value="${lettre}">
+                            <label class="form-check-label w-100" for="${inputId}" style="cursor: pointer;">
+                                ${opt}
+                            </label>
+                        </div>
+                    `;
+                });
+
+                html += `
+                            </div>
+                            <div id="feedback_${q.id}" class="d-none mt-3 p-3 rounded"></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+    
+        function corrigerQuiz() {
+            let score = 0;
+
+            questions.forEach(q => {
+                const radios = document.getElementsByName(`q${q.id}`);
+                let choixUtilisateur = null;
+
+                for (let r of radios) {
+                    if (r.checked) {
+                        choixUtilisateur = r.value;
+                        break;
+                    }
+                }
+
+                const feedbackDiv = document.getElementById(`feedback_${q.id}`);
+                feedbackDiv.classList.remove("d-none");
+
+                if (!choixUtilisateur) {
+                    feedbackDiv.className = "mt-3 p-3 rounded bg-warning text-dark border border-warning";
+                    feedbackDiv.innerHTML = `<strong>Attention :</strong> Vous n'avez pas répondu à cette question. La bonne réponse était <strong>${q.correct}</strong>.<br><hr class="my-2"><small>${q.explication}</small>`;
+                    return;
+                }
+
+                if (choixUtilisateur === q.correct) {
+                    score++;
+                    feedbackDiv.className = "mt-3 p-3 rounded bg-success text-white";
+                    feedbackDiv.innerHTML = `<strong><span style="font-size:1.2em">✔</span> Correct !</strong> ${q.explication}`;
+                } else {
+                    feedbackDiv.className = "mt-3 p-3 rounded bg-danger text-white";
+                    feedbackDiv.innerHTML = `<strong><span style="font-size:1.2em">✖</span> Incorrect.</strong> Vous avez choisi <strong>${choixUtilisateur}</strong>, mais la bonne réponse était <strong>${q.correct}</strong>.<br><hr class="my-2"><small>${q.explication}</small>`;
+                }
+            });
+
+
+            const noteSur20 = ((score / questions.length) * 20).toFixed(2);
+            
+            const resultatGlobal = document.getElementById("resultatGlobal");
+            resultatGlobal.classList.remove("d-none");
+            
+            let badgeColor = "bg-success";
+            if (noteSur20 < 10) badgeColor = "bg-danger";
+            else if (noteSur20 < 14) badgeColor = "bg-warning text-dark";
+
+            resultatGlobal.innerHTML = `
+                <div class="card shadow border-0 text-center py-4 mb-5 bg-white">
+                    <div class="card-body">
+                        <h3 class="text-dark mb-3">Résultat de l'Évaluation</h3>
+                        <div class="display-4 fw-bold text-primary mb-2">${score} / ${questions.length}</div>
+                        <p class="lead text-muted mb-3">Note finale : <span class="badge ${badgeColor} fs-4">${noteSur20} / 20</span></p>
+                        <p class="text-secondary mb-0">${score === questions.length ? '🎉 Excellent travail ! Maîtrise parfaite des fondamentaux.' : 'Consultez les explications détaillées ci-dessus pour progresser.'}</p>
+                    </div>
+                </div>
+            `;
+
+            resultatGlobal.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.onload = initialiserQuiz;
+    </script>
+
+    <!-- Bootstrap 5 JS Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

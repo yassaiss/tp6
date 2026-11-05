@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let a= prompt("entrer un nombre");
+        let b= prompt("entrer un nombre");
+        if (!isNaN(a) && !isNaN(b)) {
+            let c = parseFloat(a) + parseFloat(b);
+           alert("la somme est: " + c);
+        } else if(isNaN(a) || isNaN(b)) {
+            alert("la concaténation est: " + a + b);
+        }else if (a == null || b == null) {
+            alert("vous avez annulé l'opération");
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
